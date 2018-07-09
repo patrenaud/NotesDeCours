@@ -21,9 +21,11 @@ public class EventManager : MonoBehaviour
 			Instance = this;
 		}
 		DontDestroyOnLoad(this);
+		// Création d'un Dictionnaire d'actions
 		m_EventDict = new Dictionary<EventID, Action<object>>();
 	}
 
+	// Ajoute une fonction à l'Action liée au ID pour qu'elle soit appelée lors du dispatch
 	public void RegisterEvent(EventID i_ID, Action <object> i_CallBack)
 	{
 		if(m_EventDict.ContainsKey(i_ID))
@@ -36,6 +38,7 @@ public class EventManager : MonoBehaviour
 		}
 	}
 
+	// Enlève une fonction à l'Action liée au ID pour qu'elle ne soit pas appelée lors du dispatch
 	public void UnregisterEvent(EventID i_ID, Action<object> i_CallBack)
 	{
 		if(m_EventDict.ContainsKey(i_ID))
@@ -48,6 +51,7 @@ public class EventManager : MonoBehaviour
 		}
 	}
 
+	// Appel toutes les fonctions qui ont été ajoutées à l'ID
 	public void DispatchEvent(EventID i_ID, object i_Param = null)
 	{
 		if(m_EventDict.ContainsKey(i_ID))

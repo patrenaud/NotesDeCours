@@ -11,9 +11,8 @@ public class MAINUI : MonoBehaviour
     {
         // GAMEMANAGER.Instance.m_Player.m_HurtAction += SetLifeValue;
 
+        // Lorsque UpdateHP se fait appeler, SetlifeValue doit être appelé
         EventManager.Instance.RegisterEvent(EventID.UpdateHP, SetLifeValue);
-        //Debug.Log("Current HP:" + m_LifeBar.value);
-
     }
 
     private void SetLifeValue(object a_value)
@@ -23,11 +22,9 @@ public class MAINUI : MonoBehaviour
 
     private void OnDestroy()
     {
-
         // GAMEMANAGER.Instance.m_Player.m_HurtAction -= SetLifeValue;
 
+        // Lorsque UpdateHP se fait appeler, SetlifeValue arrête de se faire appelé
         EventManager.Instance.UnregisterEvent(EventID.UpdateHP, SetLifeValue);
-        //Debug.Log("Current HP:" + m_LifeBar.value);
-
     }
 }
