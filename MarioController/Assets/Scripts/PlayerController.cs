@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private Quaternion m_TargetRotation = new Quaternion();
     private Transform m_CameraPos;
+    [SerializeField]
+    private Transform m_RaycastParent;
 
     private Vector3 m_Forward = new Vector3();
     private RaycastHit m_HitInfo;
@@ -132,12 +134,26 @@ public class PlayerController : MonoBehaviour
         // Vector3.down est good si on ne change pas la gravité du jeu.
         if(Physics.Raycast(transform.position, Vector3.down, out m_HitInfo, m_CharacterHeight + m_HeightPadding, m_Layer))
         {
-            m_IsGrounded = true;
+            if (m_RigidBody.velocity.y < 0f)
+            {
+                // Utiliser 9 fois le Raycast au sol
+                for (int i = 0; i < m_RaycastParent.childCount; i++)
+                {
+                    Debug.DrawRay(m_RaycastParent.GetChild(i).transform.position, -transform.up);
+                    if (Physics.Raycast(m_RaycastParent.GetChild(i).transform.position, -transform.up, 0.6f))
+                    {
+                        m_IsGrounded = true;
+                        return;
+                    }
+                }
+            }
         }
         else
         {
             m_IsGrounded = false;
         }
+
+
     }
 
     private void Rotate()
