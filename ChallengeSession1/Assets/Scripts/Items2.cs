@@ -6,12 +6,14 @@ using UnityEngine.EventSystems;
 
 public class Items2 : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
-    private Vector2 m_InitialPosition;
+    public Vector2 m_InitialPosition;
     public bool m_IsEquipped = false;
+    public InventorySlot m_ItemSlot;
+    
 
     private void SelectItem()
     {
-        m_InitialPosition = transform.localPosition;
+        m_InitialPosition = transform.localPosition;        
     }
 
 
@@ -28,7 +30,8 @@ public class Items2 : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        InventoryManager.Instance.UpdateItemStatus(gameObject, m_InitialPosition);
+        
+        InventoryManager.Instance.UpdateItemStatus(gameObject, m_InitialPosition, m_ItemSlot);
     }
 
     public void Equip()
